@@ -1,0 +1,443 @@
+AAAAA
+
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+vector<int> deck(int k){
+    queue<int> q;
+    for(int i = 1; i <= k; i++){
+        q.push(i);
+    }
+
+    int a, c;
+    int t = 1;
+    vector<int> v(k);
+
+    while (q.size() != 0){
+        for(int i = 1; i <=t; i++){
+            a = q.front();
+            q.push(a);
+            q.pop();
+        }
+        c = q.front();
+        v[c-1]=t;
+        q.pop();
+        t++;
+    }
+
+    return v;
+}
+
+int main(){
+    int k;
+    cin >> k;
+    while(k!=0){
+        int d;
+        cin >> d;
+        vector<int> ans = deck(d);
+        for(int x : ans){
+            cout << x << " ";
+        }
+        cout << endl;
+        k--;
+    }
+    return 0;
+}
+
+
+____________________________________________________
+
+BBBBBBBBBB
+
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
+
+void s(int n){
+    vector<int> seq(n);
+    for(int i = 0; i<n; i++){
+        cin >> seq[i];
+    }
+
+    stack<int> p;
+
+    for(int i = 0; i<n; i++){
+        int a = seq[i];
+        while(!p.empty() && p.top() > a){
+            p.pop();
+        }
+        if(p.empty()){
+            cout << -1 << ' ';
+        }
+        else{
+            cout << p.top() << ' ';
+        }
+
+        p.push(a);
+        }
+    }
+
+int main(){
+    int n;
+    cin >> n;
+    s(n);
+    return 0;
+}
+
+
+
+
+____________________________________________________
+CCCCCCCCCC
+#include <iostream> 
+#include <stack>
+#include <string>
+
+using namespace std;
+
+int check(string a, string b){
+
+    stack<char> aa;
+    stack<char> bb;
+    bool answer = 1;
+
+    for(int i=0; i<a.size(); i++){
+        if(a[i] == '#' && !aa.empty()){
+            aa.pop();
+        }
+        else if (a[i] != '#'){
+            aa.push(a[i]);
+        }
+    }
+
+    for(int i=0; i<b.size(); i++){
+        if(b[i] == '#' && !bb.empty()){
+            bb.pop();
+        }
+        else if (b[i] != '#'){
+            bb.push(b[i]);
+        }
+    }
+
+    if(aa.size() != bb.size()){
+        answer = 0;
+    }
+
+    else{
+        while(!aa.empty()){
+            if (aa.top() == bb.top()){
+                aa.pop();
+                bb.pop();
+            }
+            else{
+                answer = 0;
+                break;
+            }
+        }
+    }
+
+    if(answer == 1){
+        cout << "Yes";
+    }
+    else{
+        cout << "No";
+    }
+
+    return 0;
+}
+
+int main(){
+    string a, b;
+    cin >> a >> b;
+    check(a,b);
+    return 0;
+}
+
+
+_______________________________
+DDDDDD
+#include <iostream>
+#include <stack>
+#include <string>
+
+using namespace std;
+
+int check(string a){
+    stack<char> b;
+
+    for(int i = 0; i<a.size(); i++){
+        if(!b.empty() && b.top() == a[i]){
+            b.pop();
+        }
+        else if(!b.empty() && b.top() != a[i]){
+            b.push(a[i]);
+        }
+        else{
+            b.push(a[i]);
+        }
+    }
+
+    if(b.empty()){
+        cout << "YES";
+    }
+    else{
+        cout << "NO";
+    }
+
+    return 0;
+}
+
+int main(){
+    string a;
+    cin >> a;
+    check(a);
+    return 0;
+}
+
+__________________________________________EEEEEEEEEEEEE
+#include <iostream>
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+void game(vector<int> B, vector<int> N){
+    queue<int> b;
+    queue<int> n;
+
+    for(int i = 0; i<B.size(); i++){
+        b.push(B[i]);
+    }
+
+    for(int i = 0; i<N.size(); i++){
+        n.push(N[i]);
+    }
+
+    long long moves = 0;
+
+    while(!b.empty() && !n.empty() && moves != 1000000){
+        int o = b.front();
+        int u = n.front();
+
+        b.pop();
+        n.pop();
+
+        if(o == 0 && u == 9){
+            b.push(o);
+            b.push(u);
+        }
+        else if (o == 9 && u == 0){
+            n.push(o);
+            n.push(u);
+        }
+        else if (o<u){
+            n.push(o);
+            n.push(u);
+        }
+        else{
+            b.push(o);
+            b.push(u);
+        }
+
+        moves++;
+    }
+
+    if(b.empty() && moves != 1000000){
+        cout << "Nursik" << ' ' << moves;
+    }
+    else if (n.empty() && moves != 1000000){
+        cout << "Boris" << ' ' << moves;
+    }
+    else{
+        cout << "blin nichya";
+    }
+}
+
+int main(){
+    vector<int> B(5);
+    vector<int> N(5);
+
+    for(int i = 0; i<5; i++){
+        cin >> B[i];
+    }
+    
+    for(int i = 0; i<5; i++){
+        cin >> N[i];
+    }
+
+    game(B,N);
+
+    return 0;
+
+}
+______________________FFFFFFFFFFFFFFF
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void sieve(int n){
+    vector<bool> prime(9000, true);
+
+    prime[0] = prime[1] = false;
+
+    for(int i = 2; i*i <= 9000; i++){
+        if(prime[i] == true){
+            for(int j = i*i; j<=9000; j+=i){
+                prime[j]=false;
+            }
+        }
+    }
+
+    int index = 0;
+    for(int i = 2; i <= 9000; i++){
+        if(prime[i]==true){
+            index++;
+        }
+        if(index == n){
+            cout << i;
+            break;
+        }
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    sieve(n);
+
+    return 0;
+}
+____________________________GGGGGGGGGGGGGG
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void sieve(int n){
+    vector<bool> prime(9000, true);
+    vector<int> superprime;
+
+    prime[0] = prime[1] = false;
+
+    for(int i = 2; i*i <= 9000; i++){
+        if(prime[i] == true){
+            for(int j = i*i; j<=9000; j+=i){
+                prime[j]=false;
+            }
+        }
+    }
+
+    int index = 0;
+    for(int i = 2; i <= 9000; i++){
+        if(prime[i]==true){
+            index++;
+            for(int j = 2; j<=9000; j++){
+                if(prime[j]==true && j == index){
+                    superprime.push_back(i);
+                }
+            }
+        }
+    }
+
+    cout << superprime[n-1];
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    sieve(n);
+
+    return 0;
+}
+_________HHHHHHHHHHHHHHHHHHHHHHHH
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void sieve(int n){
+    vector<bool> prime(1000000+1, true);
+
+    prime[0] = prime[1] = false;
+
+    for(int i = 2; i*i <= 1000000; i++){
+        if(prime[i] == true){
+            for(int j = i*i; j<=1000000; j+=i){
+                prime[j]=false;
+            }
+        }
+    }
+
+    if(prime[n]){
+        cout << "YES";
+    }
+    else{
+        cout << "NO";
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    sieve(n);
+
+    return 0;
+}
+
+__________________JJJJJJJJJJJJJJJ
+#include <iostream> 
+#include <deque>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    vector<pair<char, int>> input;
+
+    char a;
+
+    while(cin >> a){
+        if(a=='+' || a=='-'){
+            int b;
+            cin >> b;
+            input.push_back({a, b});
+        }
+        else{
+            input.push_back({a, -777});
+        }
+    }
+
+    deque<int> seq;
+
+    for(int i = 0; i< input.size(); i++){
+        if(input[i].first == '+'){
+            seq.push_front(input[i].second);
+        }
+        else if(input[i].first == '-'){
+            seq.push_back(input[i].second);
+        }
+        else if(input[i].first == '*' && !seq.empty()){
+            cout << (seq.front() + seq.back()) << endl;
+            if(seq.size()>1){
+                seq.pop_front();
+                seq.pop_back();
+            }
+            else{
+                seq.pop_front();
+            }
+        }
+        else if(input[i].first == '*' && seq.empty()){
+            cout << "error" << endl;
+        }
+    }
+
+    return 0;
+}
